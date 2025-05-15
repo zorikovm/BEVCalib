@@ -2,7 +2,6 @@
 **/.venv/
 pose-data/
 __pycache__/
-Arm_poseVSmocap_pose/takes
 data/
 logs/
 **.pth
@@ -12,11 +11,6 @@ wandb/
 *ckpts/
 *.avi
 *.pyc
-src/sync/final_sync/output_csvs
-output_*.txt
-mmc_amd64.sif
-bash_commands.sh
-commands.txt
 
 **/build/**
 **/*.so
