@@ -19,7 +19,6 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Train the model")
     parser.add_argument("--dataset_root", type=str, default="YOUR_PATH_TO_KITTI/kitti-odemetry")
     parser.add_argument("--log_dir", type=str, default="./logs/kitti_default")
-    parser.add_argument("--save_model_per_epoches", type=int, default=-1)
     parser.add_argument("--save_ckpt_per_epoches", type=int, default=-1)
     parser.add_argument("--label", type=str, default=None)
     parser.add_argument("--angle_range_deg", type=float, default=None)
@@ -214,9 +213,6 @@ def main():
             train_loss[key] /= len(train_loader)
             print(f"Epoch [{epoch+1}/{num_epochs}], Train Loss {key}: {train_loss[key]:.4f}")
             writer.add_scalar(f"Loss/train/{key}", train_loss[key], epoch)
-
-        if args.save_model_per_epoches > 0 and (epoch + 1) % args.save_model_per_epoches == 0:
-            torch.save(model.state_dict(), os.path.join(model_save_dir, f"model_epoch_{epoch+1}.pth"))
         
         if epoch == num_epochs - 1 or (args.save_ckpt_per_epoches > 0 and (epoch + 1) % args.save_ckpt_per_epoches == 0):
             ckpt_path = os.path.join(ckpt_save_dir, f"ckpt_{epoch+1}.pth")
