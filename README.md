@@ -12,7 +12,7 @@ The code is built with following libraries:
 
 - Python = 3.11
 - Pytorch = 2.6.0
-- CUDA = 11.8
+- cuda-toolkit = 11.8
 - [spconv-cu118](https://github.com/traveller59/spconv)
 - OpenCV
 - pandas
@@ -21,6 +21,11 @@ The code is built with following libraries:
 - [deformable_attention](https://github.com/lucidrains/deformable-attention)
 - tensorboard
 - wandb
+
+We recommend using the following command to install cuda-toolkit=11.8:
+```bash
+conda install -c "nvidia/label/cuda-11.8.0" cuda-toolkit
+```
 
 After installing the above dependencies, please run the following command to install [bev_pool](https://github.com/mit-han-lab/bevfusion) operation
 ```bash
