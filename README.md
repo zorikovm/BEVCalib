@@ -12,6 +12,7 @@ The code is built with following libraries:
 
 - Python = 3.11
 - Pytorch = 2.6.0
+- CUDA = 11.8
 - cuda-toolkit = 11.8
 - [spconv-cu118](https://github.com/traveller59/spconv)
 - OpenCV
