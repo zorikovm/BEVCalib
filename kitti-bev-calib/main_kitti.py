@@ -165,8 +165,8 @@ def main():
     }
 
     eval_noise = {
-        "angle_range_deg": args.eval_angle_range_deg if args.eval_angle_range_deg is not None else 20,
-        "trans_range": args.eval_trans_range if args.eval_trans_range is not None else 1.5,
+        "angle_range_deg": args.eval_angle_range_deg if args.eval_angle_range_deg is not None else train_noise["angle_range_deg"],
+        "trans_range": args.eval_trans_range if args.eval_trans_range is not None else train_noise["trans_range"],
     }
 
     for epoch in range(num_epochs):
