@@ -16,16 +16,13 @@ import os
 def parse_args():
     parser = argparse.ArgumentParser("Run inference / evaluation")
     parser.add_argument("--dataset_root", type=str, default="/data/HangQiu/data/kitti-odemetry")
-    parser.add_argument("--cam_params_path", type=str, required=True)
     parser.add_argument("--ckpt_path", type=str, required=True, help="Path to the saved .pth checkpoint")
     parser.add_argument("--log_dir", type=str, default="./logs/inference")
     parser.add_argument("--batch_size", type=int, default=1)
     parser.add_argument("--xyz_only", type=int, default=1)
-    parser.add_argument("--gpus", type=int, default=1)
-    parser.add_argument("--angle_range_deg", type=float, default=[20.0])
-    parser.add_argument("--trans_range", type=float, default=[1.5])
+    parser.add_argument("--angle_range_deg", type=float, default=20.0)
+    parser.add_argument("--trans_range", type=float, default=1.5)
     return parser.parse_args()
-
 
 def collate_fn(batch):
     target_size = (704, 256)
@@ -137,8 +134,8 @@ def main():
     translation_errors = []
     rotation_errors = []
 
-    eval_angle = np.array(args.angle_range_deg)
-    eval_trans_range = np.array(args.trans_range)
+    eval_angle = np.array([args.angle_range_deg])
+    eval_trans_range = np.array([args.trans_range])
 
     for angle, trans in zip(eval_angle, eval_trans_range):
         print(f"\nEvaluating perturb   angle {angle},  trans {trans}")

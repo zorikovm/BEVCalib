@@ -42,8 +42,14 @@ cd ./kitti-bev-calib/img_branch/bev_pool && python setup.py build_ext --inplace
 ```
 
 ### Evaluation
-We provide a pretrained model for evaluation. Please download the pretrained model from [Google Drive]() and place it in the `./ckpt` directory. Please run the following command to evaluate the model:
+We provide a pretrained model for evaluation. Please download the pretrained model from [Google Drive](https://drive.google.com/drive/folders/1r9RkZATm9-7vh5buoB1YSDuL3_DslxZ3?usp=share_link) and place it in the `./ckpt` directory. Please run the following command to evaluate the model:
 ```bash
+python3 kitti-bev-calib/inference_kitti.py \
+         --log_dir ./logs/kitti \
+         --dataset_root YOUR_PATH_TO_KITTI/kitti-odemetry \
+         --ckpt_path YOUR_PATH_TO_KITTI_CHECKPOINT/ckpt/ckpt.pth \
+         --angle_range_deg 20.0 \ 
+         --trans_range 1.5 
 ```
 
 ### Training
