@@ -57,7 +57,7 @@ python kitti-bev-calib/train_kitti.py --log_dir ./logs/kitti \
 You can change `--angle_range_deg` and `--trans_range` to train under different noise settings. You can also try to use `--pretrain_ckpt` to load a pretrained model for fine-tuning on your own dataset.
 
 ### Acknowledgement
-BEVCalib is appreciated by the following great open-source projects: [BEVFusion](https://github.com/mit-han-lab/bevfusion?tab=readme-ov-file), [LCCNet](https://github.com/IIPCVLAB/LCCNet), [LSS](https://github.com/nv-tlabs/lift-splat-shoot), [spconv](https://github.com/traveller59/spconv), and [Deformable Attention](https://github.com/lucidrains/deformable-attention).
+BEVCalib appreciates the following great open-source projects: [BEVFusion](https://github.com/mit-han-lab/bevfusion?tab=readme-ov-file), [LCCNet](https://github.com/IIPCVLAB/LCCNet), [LSS](https://github.com/nv-tlabs/lift-splat-shoot), [spconv](https://github.com/traveller59/spconv), and [Deformable Attention](https://github.com/lucidrains/deformable-attention).
 
 ### Citation
 ```bibtex
