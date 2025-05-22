@@ -117,8 +117,6 @@ def main():
     model = BEVCalib(
         deformable=False,      
         bev_encoder=True,
-        weight_translation=1.0,
-        feat_align=False,
     ).to(device)
 
     ckpt = torch.load(args.ckpt_path, map_location=device)
@@ -206,14 +204,10 @@ def main():
     translation_errors = torch.cat(translation_errors, dim=0).cpu().numpy()
     rotation_errors = torch.cat(rotation_errors, dim=0).cpu().numpy()
 
-    print("Average translation error: ", np.mean(translation_errors))
     print("Average translation xyz error: ", np.mean(translation_errors, axis=0))
-    print("Average rotation error: ", np.mean(rotation_errors))
     print("Average rotation ypr error: ", np.mean(rotation_errors, axis=0))
 
-    print("STD of translation error: ", np.std(translation_errors))
     print("STD of translation xyz error: ", np.std(translation_errors, axis=0))
-    print("STD of rotation error: ", np.std(rotation_errors))
     print("STD of rotation ypr error: ", np.std(rotation_errors, axis=0))
 
 if __name__ == "__main__":
