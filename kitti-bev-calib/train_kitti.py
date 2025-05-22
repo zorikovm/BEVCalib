@@ -240,7 +240,7 @@ def main():
                 for batch_index, (imgs, pcs, masks, gt_T_to_camera, intrinsics) in enumerate(val_loader):
                     # img, pc, depth_img, gt_T_to_camera, init_T_to_camera
                     gt_T_to_camera = np.array(gt_T_to_camera).astype(np.float32)
-                    init_T_to_camera, ang_err, trans_err = generate_single_perturbation_from_T(gt_T_to_camera, angle_range_deg=eval_trans_range, trans_range=eval_angle_range)
+                    init_T_to_camera, ang_err, trans_err = generate_single_perturbation_from_T(gt_T_to_camera, angle_range_deg=eval_angle_range, trans_range=eval_trans_range)
                     resize_imgs = torch.from_numpy(np.array(imgs)).permute(0, 3, 1, 2).float().to(device)
                     if xyz_only_choise:
                         pcs = np.array(pcs)[:, :, :3]
