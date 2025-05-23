@@ -17,7 +17,8 @@ RUN pip install \
     spconv-cu118 \
     deformable_attention \
     tensorboard \
-    wandb
+    wandb \ 
+    pykitti
 
 ENV LD_LIBRARY_PATH=/opt/conda/lib/python3.11/site-packages/torch/lib:$LD_LIBRARY_PATH
 
