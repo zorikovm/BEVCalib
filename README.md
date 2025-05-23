@@ -22,6 +22,7 @@ The code is built with following libraries:
 - [deformable_attention](https://github.com/lucidrains/deformable-attention)
 - tensorboard
 - wandb
+- pykitti
 
 We recommend using the following command to install cuda-toolkit=11.8:
 ```bash
