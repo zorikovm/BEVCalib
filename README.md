@@ -81,8 +81,8 @@ We provide instructions to reproduce our results on the KITTI-Ododemetry dataset
 ```bash
 python kitti-bev-calib/train_kitti.py --log_dir ./logs/kitti \
         --dataset_root YOUR_PATH_TO_KITTI/kitti-odemetry \
-        --save_ckpt_per_epoches 50 --num_epochs 500 --label 20_1.5 --angle_range_deg 20 --trans_range 1.5 \
-        --deformable 0 --bev_encoder 1 --batch_size 16 --xyz_only 1 --scheduler 1 --lr 1e-4 --step_size 100
+        --save_ckpt_per_epoches 40 --num_epochs 500 --label 20_1.5 --angle_range_deg 20 --trans_range 1.5 \
+        --deformable 0 --bev_encoder 1 --batch_size 16 --xyz_only 1 --scheduler 1 --lr 1e-4 --step_size 80
 ```
 You can change `--angle_range_deg` and `--trans_range` to train under different noise settings. You can also try to use `--pretrain_ckpt` to load a pretrained model for fine-tuning on your own dataset.
 
