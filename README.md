@@ -22,6 +22,7 @@ The code is built with following libraries:
 - [deformable_attention](https://github.com/lucidrains/deformable-attention)
 - tensorboard
 - wandb
+- pykitti
 
 We recommend using the following command to install cuda-toolkit=11.8:
 ```bash
@@ -72,8 +73,8 @@ python kitti-bev-calib/inference_kitti.py \
          --log_dir ./logs/kitti \
          --dataset_root YOUR_PATH_TO_KITTI/kitti-odemetry \
          --ckpt_path YOUR_PATH_TO_KITTI_CHECKPOINT/ckpt/ckpt.pth \
-         --angle_range_deg 20.0 \ 
-         --trans_range 1.5 
+         --angle_range_deg 20.0 \
+         --trans_range 1.5
 ```
 
 ## Training
