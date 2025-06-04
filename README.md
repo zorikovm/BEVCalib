@@ -1,6 +1,6 @@
 # BEVCalib: LiDAR-Camera Calibration via Geometry-Guided Bird's-Eye View Representation
 
-[![arXiv](https://img.shields.io/badge/arXiv-2406.09246-df2a2a.svg?style=for-the-badge)](https://arxiv.org/abs/2406.09246) [![Website](https://img.shields.io/badge/Website-BEVCalib-blue?style=for-the-badge)](https://cisl.ucr.edu/BEVCalib) [![PyTorch](https://img.shields.io/badge/PyTorch-2.6.0-EE4C2C.svg?style=for-the-badge&logo=pytorch)](https://pytorch.org/get-started/locally/) [![Python](https://img.shields.io/badge/python-3.11-yellow?style=for-the-badge)](https://www.python.org) [![License](https://img.shields.io/github/license/TRI-ML/prismatic-vlms?style=for-the-badge)](LICENSE)
+[![arXiv](https://img.shields.io/badge/arXiv-2506.02587-df2a2a.svg?style=for-the-badge)](https://arxiv.org/abs/2506.02587) [![Website](https://img.shields.io/badge/Website-BEVCalib-blue?style=for-the-badge)](https://cisl.ucr.edu/BEVCalib) [![PyTorch](https://img.shields.io/badge/PyTorch-2.6.0-EE4C2C.svg?style=for-the-badge&logo=pytorch)](https://pytorch.org/get-started/locally/) [![Python](https://img.shields.io/badge/python-3.11-yellow?style=for-the-badge)](https://www.python.org) [![License](https://img.shields.io/github/license/TRI-ML/prismatic-vlms?style=for-the-badge)](LICENSE)
 
 <hr style="border: 2px solid gray;"></hr>
 
@@ -102,4 +102,13 @@ BEVCalib appreciates the following great open-source projects: [BEVFusion](https
 
 ## Citation
 ```bibtex
+@misc{yuan2025bevcaliblidarcameracalibrationgeometryguided,
+      title={BEVCALIB: LiDAR-Camera Calibration via Geometry-Guided Bird's-Eye View Representations}, 
+      author={Weiduo Yuan and Jerry Li and Justin Yue and Divyank Shah and Konstantinos Karydis and Hang Qiu},
+      year={2025},
+      eprint={2506.02587},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2506.02587}, 
+}
 ```
