@@ -7,6 +7,10 @@
 ## Getting Started
 
 ### Prerequistes
+First create a conda environment:
+```bash
+conda env create -n bevcalib python=3.11
+```
 
 The code is built with following libraries:
 
@@ -67,7 +71,13 @@ kitti-odometry/
 Coming soon!
 
 ## Evaluation
-We provide a pretrained model for evaluation. Please download the pretrained model from [Google Drive](https://drive.google.com/drive/folders/1r9RkZATm9-7vh5buoB1YSDuL3_DslxZ3?usp=share_link) and place it in the `./ckpt` directory. Please run the following command to evaluate the model:
+We provide a pretrained model for evaluation. Please find the pretrained model from [Google Drive](https://drive.google.com/drive/folders/1r9RkZATm9-7vh5buoB1YSDuL3_DslxZ3?usp=share_link) and place it in the `./ckpt` directory. For your convenience, you can also run `pip3 install gdown` and run the following command to download the KITTI checkpoint in the command line.
+
+```bash
+gdown https://drive.google.com/uc\?id\=1gWO-Z4NXG2uWwsZPecjWByaZVtgJ0XNb
+```
+
+Please run the following command to evaluate the model:
 ```bash
 python kitti-bev-calib/inference_kitti.py \
          --log_dir ./logs/kitti \
