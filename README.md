@@ -92,4 +92,13 @@ BEVCalib appreciates the following great open-source projects: [BEVFusion](https
 
 ## Citation
 ```bibtex
+@misc{yuan2025bevcaliblidarcameracalibrationgeometryguided,
+      title={BEVCALIB: LiDAR-Camera Calibration via Geometry-Guided Bird's-Eye View Representations}, 
+      author={Weiduo Yuan and Jerry Li and Justin Yue and Divyank Shah and Konstantinos Karydis and Hang Qiu},
+      year={2025},
+      eprint={2506.02587},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2506.02587}, 
+}
 ```
