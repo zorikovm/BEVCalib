@@ -1,6 +1,6 @@
 # BEVCalib: LiDAR-Camera Calibration via Geometry-Guided Bird's-Eye View Representation
 
-[![arXiv](https://img.shields.io/badge/arXiv-2506.02587-df2a2a.svg?style=for-the-badge)](https://arxiv.org/abs/2506.02587) [![Website](https://img.shields.io/badge/Website-BEVCalib-blue?style=for-the-badge)](https://cisl.ucr.edu/BEVCalib) [![PyTorch](https://img.shields.io/badge/PyTorch-2.6.0-EE4C2C.svg?style=for-the-badge&logo=pytorch)](https://pytorch.org/get-started/locally/) [![Python](https://img.shields.io/badge/python-3.11-yellow?style=for-the-badge)](https://www.python.org) [![License](https://img.shields.io/github/license/TRI-ML/prismatic-vlms?style=for-the-badge)](LICENSE)
+[![arXiv](https://img.shields.io/badge/arXiv-2506.02587-df2a2a.svg?style=for-the-badge)](https://arxiv.org/abs/2506.02587) [![Website](https://img.shields.io/badge/Website-BEVCalib-blue?style=for-the-badge)](https://cisl.ucr.edu/BEVCalib) [![HF Models](https://img.shields.io/badge/%F0%9F%A4%97-Models-yellow?style=for-the-badge)](https://huggingface.co/cisl-hf/BEVCalib) [![PyTorch](https://img.shields.io/badge/PyTorch-2.6.0-EE4C2C.svg?style=for-the-badge&logo=pytorch)](https://pytorch.org/get-started/locally/) [![License](https://img.shields.io/github/license/TRI-ML/prismatic-vlms?style=for-the-badge)](LICENSE)
 
 <hr style="border: 2px solid gray;"></hr>
 
@@ -72,13 +72,21 @@ kitti-odometry/
 ### CalibDB
 Coming soon!
 
-## Evaluation
-We provide a pretrained model for evaluation. Please find the pretrained model from [Google Drive](https://drive.google.com/drive/folders/1r9RkZATm9-7vh5buoB1YSDuL3_DslxZ3?usp=share_link) and place it in the `./ckpt` directory. For your convenience, you can also run `pip3 install gdown` and run the following command to download the KITTI checkpoint in the command line.
+## Pretrained Model
+We release our pretrained model on the KITTI-Odometry dataset. We provide two ways to download our models.
+### Google cloud
+Please find the pretrained model from [Google Drive](https://drive.google.com/drive/folders/1r9RkZATm9-7vh5buoB1YSDuL3_DslxZ3?usp=share_link) and place it in the `./ckpt` directory. For your convenience, you can also run `pip3 install gdown` and run the following command to download the KITTI checkpoint in the command line.
 
 ```bash
 gdown https://drive.google.com/uc\?id\=1gWO-Z4NXG2uWwsZPecjWByaZVtgJ0XNb
 ```
+### Hugging face
+We also release our pretrained model on [Hugging Face page](https://huggingface.co/cisl-hf/BEVCalib). You should download huggingface-cli by `pip install -U "huggingface_hub[cli]"` and then download the pretrained model by running the following command:
+```bash
+huggingface-cli download cisl-hf/BEVCalib --revision kitti-bev-calib --local-dir YOUR_LOCAL_PATH
+```
 
+## Evaluation
 Please run the following command to evaluate the model:
 ```bash
 python kitti-bev-calib/inference_kitti.py \
