@@ -10,6 +10,8 @@
 First create a conda environment:
 ```bash
 conda env create -n bevcalib python=3.11
+conda activate bevcalib
+pip3 install -r requirements.txt
 ```
 
 The code is built with following libraries:
