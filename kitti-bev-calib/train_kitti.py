@@ -171,6 +171,9 @@ def main():
     for epoch in range(num_epochs):
         model.train()
         train_loss = {}
+        out_init_loss_choice = False
+        if epoch < 5:
+            out_init_loss_choice = True # Output initial loss for the first 5 epochs
         for batch_index, (imgs, pcs, masks, gt_T_to_camera, intrinsics) in enumerate(train_loader):
             gt_T_to_camera = np.array(gt_T_to_camera).astype(np.float32)
             init_T_to_camera, _, _ = generate_single_perturbation_from_T(gt_T_to_camera, angle_range_deg=train_noise["angle_range_deg"], trans_range=train_noise["trans_range"])
@@ -185,7 +188,7 @@ def main():
 
             optimizer.zero_grad()
             # img, pc, gt_T_to_camera, init_T_to_camera, post_cam2ego_T, cam_intrinsic
-            T_pred, init_loss, loss = model(resize_imgs, pcs, gt_T_to_camera, init_T_to_camera, post_cam2ego_T, intrinsic_matrix, masks=masks, out_init_loss=True)
+            T_pred, init_loss, loss = model(resize_imgs, pcs, gt_T_to_camera, init_T_to_camera, post_cam2ego_T, intrinsic_matrix, masks=masks, out_init_loss=out_init_loss_choice)
             total_loss = loss["total_loss"]
             total_loss.backward()
             optimizer.step()
@@ -249,7 +252,7 @@ def main():
                     init_T_to_camera = torch.from_numpy(init_T_to_camera).float().to(device)
                     post_cam2ego_T = torch.eye(4).unsqueeze(0).repeat(gt_T_to_camera.shape[0], 1, 1).float().to(device)
                     intrinsic_matrix = torch.from_numpy(np.array(intrinsics)).float().to(device)
-                    T_pred, init_loss, loss = model(resize_imgs, pcs, gt_T_to_camera, init_T_to_camera, post_cam2ego_T, intrinsic_matrix, masks=masks, out_init_loss=True)
+                    T_pred, init_loss, loss = model(resize_imgs, pcs, gt_T_to_camera, init_T_to_camera, post_cam2ego_T, intrinsic_matrix, masks=masks, out_init_loss=False)
 
                     for key in loss.keys():
                         val_key = key
