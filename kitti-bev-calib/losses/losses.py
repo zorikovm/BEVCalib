@@ -89,7 +89,7 @@ class PC_reproj_loss(nn.Module):
             RT_total = torch.matmul(RT_gt.inverse(), T_pred)
             pc = pcs[i]
             if mask is not None:
-                pc = pc[mask[i]]
+                pc = pc[mask[i] == 1]
             ones = torch.ones(pc.shape[0], 1, device=pc.device)
             points_h = torch.cat([pc, ones], dim = 1) # (N, 4)
             points_transformed = torch.matmul(points_h, RT_total.t())[:, :3] # (N, 3)
