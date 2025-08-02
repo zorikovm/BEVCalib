@@ -111,14 +111,11 @@ You can change `--angle_range_deg` and `--trans_range` to train under different 
 BEVCalib appreciates the following great open-source projects: [BEVFusion](https://github.com/mit-han-lab/bevfusion?tab=readme-ov-file), [LCCNet](https://github.com/IIPCVLAB/LCCNet), [LSS](https://github.com/nv-tlabs/lift-splat-shoot), [spconv](https://github.com/traveller59/spconv), and [Deformable Attention](https://github.com/lucidrains/deformable-attention).
 
 ## Citation
-```bibtex
-@misc{yuan2025bevcaliblidarcameracalibrationgeometryguided,
+```
+@inproceedings{bevcalib,
       title={BEVCALIB: LiDAR-Camera Calibration via Geometry-Guided Bird's-Eye View Representations}, 
       author={Weiduo Yuan and Jerry Li and Justin Yue and Divyank Shah and Konstantinos Karydis and Hang Qiu},
+      booktitle={9th Annual Conference on Robot Learning},
       year={2025},
-      eprint={2506.02587},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2506.02587}, 
 }
 ```
