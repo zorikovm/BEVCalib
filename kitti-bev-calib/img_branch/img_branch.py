@@ -185,7 +185,10 @@ class GaussianLSS(nn.Module):
         sigma = torch.exp(log_sigma) + 1e-6
 
         depth_values = self.depth_values.to(mu.device)
-        gaussian = torch.exp(-0.5 * ((depth_values - mu.unsqueeze(1)) ** 2) / (sigma.unsqueeze(1) ** 2))
+        # Broadcast the per-pixel Gaussian parameters across the depth bins and
+        # normalise across the depth dimension so that the weights form a valid
+        # probability distribution over D.
+        gaussian = torch.exp(-0.5 * ((depth_values - mu) ** 2) / (sigma ** 2))
         gaussian = gaussian / (gaussian.sum(dim=1, keepdim=True) + 1e-6)
 
         img_feats = gaussian.unsqueeze(1) * img_feats.unsqueeze(2)
