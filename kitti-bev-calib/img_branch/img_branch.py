@@ -106,8 +106,14 @@ class LSS(nn.Module):
         return geometry, img_depth_feature
 
 class GaussianLSS(nn.Module):
-    ### Adapted from https://github.com/nv-tlabs/lift-splat-shoot
-    def __init__(self, 
+    """Gaussian Lift-Splat-Shoot module.
+
+    This adapts the classical LSS depth reasoning by representing the per-pixel
+    depth distribution with a Gaussian parameterisation, following
+    https://github.com/HCIS-Lab/GaussianLSS.
+    """
+
+    def __init__(self,
                  transformedImgShape = (3, 256, 704),
                  featureShape = (256, 32, 88),
                  d_conf = d_conf,
@@ -117,9 +123,11 @@ class GaussianLSS(nn.Module):
         _, self.orfH, self.orfW = transformedImgShape
         self.fC, self.fH, self.fW = featureShape
         self.d_st, self.d_end, self.d_step = d_conf
-        self.D = torch.arange(self.d_st, self.d_end, self.d_step, dtype = torch.float).shape[0]
+        depth_values = torch.arange(self.d_st, self.d_end, self.d_step, dtype=torch.float)
+        self.D = depth_values.shape[0]
         self.out_channels = out_channels
         self.frustum = self.create_frustum()
+        self.register_buffer("depth_values", depth_values.view(1, self.D, 1, 1), persistent=False)
         self.depth_net = nn.Sequential(
             nn.Conv2d(self.fC, self.fC, 3, padding=1),
             nn.BatchNorm2d(self.fC, eps=1e-3, momentum=0.01),
@@ -127,9 +135,9 @@ class GaussianLSS(nn.Module):
             nn.Conv2d(self.fC, self.fC, 3, padding=1),
             nn.BatchNorm2d(self.fC, eps=1e-3, momentum=0.01),
             nn.ReLU(True),
-            nn.Conv2d(self.fC, self.out_channels + self.D, 1),
+            nn.Conv2d(self.fC, self.out_channels + 2, 1),
         )
-    
+
     def create_frustum(self):
         ds = torch.arange(self.d_st, self.d_end, self.d_step, dtype = torch.float).view(-1, 1, 1).expand(-1, self.fH, self.fW) # (D, fH, fW)
         xs = torch.linspace(0, self.orfW - 1, self.fW).view(1, 1, self.fW).expand(self.D, self.fH, self.fW)
@@ -138,7 +146,7 @@ class GaussianLSS(nn.Module):
         frustum = torch.stack((xs, ys, ds), -1) # img space, the frustum is a cuboid.
         return nn.Parameter(frustum, requires_grad = False)
 
-    def get_geometry(self, 
+    def get_geometry(self,
                      cam2ego_rot,
                      cam2ego_trans,
                      cam_intrins,
@@ -157,26 +165,36 @@ class GaussianLSS(nn.Module):
             ),
             5,
         )
-        # after : (B, N, D, fH, fW, (x * z, y * z, z), 1), transfrom from image space to camera space, the frustum transforms from cuboid to pyramid. 
+        # after : (B, N, D, fH, fW, (x * z, y * z, z), 1), transfrom from image space to camera space, the frustum transforms from cuboid to pyramid.
 
         combine = img_rots.matmul(torch.inverse(cam_intrins))
         points = combine.view(B, N, 1, 1, 1, 3, 3).matmul(points).squeeze(-1)
         points += img_trans.view(B, N, 1, 1, 1, 3) # To ego space
 
-        return points 
+        return points
 
     def get_cam_feature(self, img_feats):
         B, N, C, H, W = img_feats.shape
-        img_feats = img_feats.view(B * N, C, H, W) 
-        img_feats = self.depth_net(img_feats) # (B * N, out_channels + D, H, W)
-        depth = img_feats[:, :self.D].softmax(dim = 1) # (B * N, D, H, W)
-        img_feats = depth.unsqueeze(1) * img_feats[:, self.D : self.D + self.out_channels].unsqueeze(2) # (BN, 1, D, H, W) * (BN, out_channels, 1, H, W) => (BN, out_channels, D, H, W)
+        img_feats = img_feats.view(B * N, C, H, W)
+        img_feats = self.depth_net(img_feats) # (B * N, out_channels + 2, H, W)
+        gaussian_params = img_feats[:, :2]
+        img_feats = img_feats[:, 2:]
+
+        mu = gaussian_params[:, 0:1]
+        log_sigma = gaussian_params[:, 1:2]
+        sigma = torch.exp(log_sigma) + 1e-6
+
+        depth_values = self.depth_values.to(mu.device)
+        gaussian = torch.exp(-0.5 * ((depth_values - mu.unsqueeze(1)) ** 2) / (sigma.unsqueeze(1) ** 2))
+        gaussian = gaussian / (gaussian.sum(dim=1, keepdim=True) + 1e-6)
+
+        img_feats = gaussian.unsqueeze(1) * img_feats.unsqueeze(2)
         img_feats = img_feats.view(B, N, self.out_channels, self.D, H, W)
         img_feats = img_feats.permute(0, 1, 3, 4, 5, 2)
-        
+
         return img_feats
 
-    def forward(self, 
+    def forward(self,
                 cam2ego_rot,
                 cam2ego_trans,
                 cam_intrins,
@@ -197,7 +215,7 @@ class Cam2BEV(nn.Module):
                  FPN_out_channels = 256,
                  ):
         super(Cam2BEV, self).__init__()
-        self.lss = LSS()
+        self.lss = GaussianLSS()
         self.CamEncode = SwinT_tiny_Encoder(output_indices, featureShape, encoder_out_channels, FPN_in_channels, FPN_out_channels)
         dx, bx, nx = gen_dx_bx(xbound=xbound, ybound=ybound, zbound=zbound)
         self.dx = nn.Parameter(dx, requires_grad = False)
