@@ -232,7 +232,8 @@ class GaussianLSS(nn.Module):
         opacities = opacities.view(B, N, 1, H, W)
         img_feats = img_feats.view(B, N, self.out_channels, H, W)
 
-        img_depth_feature = depth_prob.unsqueeze(-1) * img_feats.unsqueeze(2)
+        img_feats_hw_last = img_feats.permute(0, 1, 3, 4, 2)
+        img_depth_feature = depth_prob.unsqueeze(-1) * img_feats_hw_last.unsqueeze(2)
 
         return img_feats, img_depth_feature, depth_prob, opacities
 
